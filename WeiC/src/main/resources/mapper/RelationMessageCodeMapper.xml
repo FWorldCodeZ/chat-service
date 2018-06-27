@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zy.WeiC.dao.RelationMessageCodeMapper">
+  <resultMap id="BaseResultMap" type="com.zy.WeiC.pojo.RelationMessageCode">
+    <id column="code_id" jdbcType="INTEGER" property="codeId" />
+    <result column="parentcode" jdbcType="INTEGER" property="parentcode" />
+    <result column="childcode" jdbcType="INTEGER" property="childcode" />
+    <result column="messageInfo" jdbcType="VARCHAR" property="messageinfo" />
+    <result column="messageStatus" jdbcType="INTEGER" property="messagestatus" />
+    <result column="code_date" jdbcType="DATE" property="codeDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    code_id, parentcode, childcode, messageInfo, messageStatus, code_date
+  </sql>
+  <select id="selectByExample" parameterType="com.zy.WeiC.pojo.RelationMessageCodeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from relation_message_code
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from relation_message_code
+    where code_id = #{codeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from relation_message_code
+    where code_id = #{codeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zy.WeiC.pojo.RelationMessageCodeExample">
+    delete from relation_message_code
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zy.WeiC.pojo.RelationMessageCode">
+    insert into relation_message_code (code_id, parentcode, childcode, 
+      messageInfo, messageStatus, code_date
+      )
+    values (#{codeId,jdbcType=INTEGER}, #{parentcode,jdbcType=INTEGER}, #{childcode,jdbcType=INTEGER}, 
+      #{messageinfo,jdbcType=VARCHAR}, #{messagestatus,jdbcType=INTEGER}, #{codeDate,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zy.WeiC.pojo.RelationMessageCode">
+    insert into relation_message_code
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="codeId != null">
+        code_id,
+      </if>
+      <if test="parentcode != null">
+        parentcode,
+      </if>
+      <if test="childcode != null">
+        childcode,
+      </if>
+      <if test="messageinfo != null">
+        messageInfo,
+      </if>
+      <if test="messagestatus != null">
+        messageStatus,
+      </if>
+      <if test="codeDate != null">
+        code_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="codeId != null">
+        #{codeId,jdbcType=INTEGER},
+      </if>
+      <if test="parentcode != null">
+        #{parentcode,jdbcType=INTEGER},
+      </if>
+      <if test="childcode != null">
+        #{childcode,jdbcType=INTEGER},
+      </if>
+      <if test="messageinfo != null">
+        #{messageinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="messagestatus != null">
+        #{messagestatus,jdbcType=INTEGER},
+      </if>
+      <if test="codeDate != null">
+        #{codeDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zy.WeiC.pojo.RelationMessageCodeExample" resultType="java.lang.Long">
+    select count(*) from relation_message_code
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update relation_message_code
+    <set>
+      <if test="record.codeId != null">
+        code_id = #{record.codeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentcode != null">
+        parentcode = #{record.parentcode,jdbcType=INTEGER},
+      </if>
+      <if test="record.childcode != null">
+        childcode = #{record.childcode,jdbcType=INTEGER},
+      </if>
+      <if test="record.messageinfo != null">
+        messageInfo = #{record.messageinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messagestatus != null">
+        messageStatus = #{record.messagestatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.codeDate != null">
+        code_date = #{record.codeDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update relation_message_code
+    set code_id = #{record.codeId,jdbcType=INTEGER},
+      parentcode = #{record.parentcode,jdbcType=INTEGER},
+      childcode = #{record.childcode,jdbcType=INTEGER},
+      messageInfo = #{record.messageinfo,jdbcType=VARCHAR},
+      messageStatus = #{record.messagestatus,jdbcType=INTEGER},
+      code_date = #{record.codeDate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zy.WeiC.pojo.RelationMessageCode">
+    update relation_message_code
+    <set>
+      <if test="parentcode != null">
+        parentcode = #{parentcode,jdbcType=INTEGER},
+      </if>
+      <if test="childcode != null">
+        childcode = #{childcode,jdbcType=INTEGER},
+      </if>
+      <if test="messageinfo != null">
+        messageInfo = #{messageinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="messagestatus != null">
+        messageStatus = #{messagestatus,jdbcType=INTEGER},
+      </if>
+      <if test="codeDate != null">
+        code_date = #{codeDate,jdbcType=DATE},
+      </if>
+    </set>
+    where code_id = #{codeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zy.WeiC.pojo.RelationMessageCode">
+    update relation_message_code
+    set parentcode = #{parentcode,jdbcType=INTEGER},
+      childcode = #{childcode,jdbcType=INTEGER},
+      messageInfo = #{messageinfo,jdbcType=VARCHAR},
+      messageStatus = #{messagestatus,jdbcType=INTEGER},
+      code_date = #{codeDate,jdbcType=DATE}
+    where code_id = #{codeId,jdbcType=INTEGER}
+  </update>
+</mapper>

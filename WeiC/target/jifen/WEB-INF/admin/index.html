@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<!--<a onclick="clickme()">点我发送一个ajax请求</a>
+<div id="a"></div>
+<div id="b"></div>
+<div id="c"></div>
+<div id="d"></div>-->
+<form id="form" method="post" action="javascript:formSubmit();" enctype="multipart/form-data">
+
+    <P><input id="name" name="name" placeholder="分类名称" type="text"></P>
+    <p><select name="parentCode" id="parentCode">
+        <option value="0">一级类</option>
+    </select> </P>
+    <P><input id="sort" name="sort" type="number" placeholder="排序"></P>
+
+    <input type="submit" value="提交">
+
+</form>
+
+
+<script src="js/jquery-3.2.1.js"></script>
+<script src="js/jquery.form.js"></script>
+<script src="js/layer.js"></script>
+<script>
+
+    function formSubmit() {
+        var option = {
+            url:"http://localhost:8081/v1/categories",
+            type:"get",
+            success:function (data) {
+                if(data.errorcCode == "200"){
+                    layer.alert(data.message, {icon: 6});
+                }else if(data.errorcCode == "500"){
+                    layer.alert(data.message, {icon: 3});
+                }
+            }
+        };
+
+        $("#form").ajaxSubmit(option);
+    }
+//
+//    function clickme() {
+//        var option = {
+//            url:"http://localhost:8081/v1/categories",
+//            type:"get",
+//            success: function (data) {
+//                if(data.errorcCode == "200"){
+//                    layer.alert(data.message, {icon: 6});
+//                }else if(data.errorcCode == "500"){
+//                    layer.alert(data.message, {icon: 3});
+//                }
+//            }
+//        };
+//        $.ajax(option);
+//    }
+$(function () {
+    formSubmit1();
+})
+    function formSubmit1() {
+        var option = {
+            url:"http://localhost:8081/v1/categories/parents",
+            type:"get",
+            success: function (data) {
+                if(data.errorcCode == "200"){
+
+                 $.each(data.item.data,function(index,content){
+                     var html='<option value="'+content.code+'">'+content.name+'</option>'
+                     $("#parentCode").append(html);
+                 })
+
+                }
+            },
+            error:function(data){
+                layer.closeAll("loading");
+                layer.alert('网络错误，请重试！',{icon:3});
+            }
+        };
+        $.ajax(option);
+    }
+
+
+
+</script>
+</body>
+</html>
